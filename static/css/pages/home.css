@@ -1,0 +1,84 @@
+.home-container{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:20px;
+}
+
+.logo{
+
+    font-size:70px;
+
+    margin-bottom:20px;
+}
+
+h1{
+
+    color:#8B5E3C;
+
+    font-size:42px;
+}
+
+h2{
+
+    color:#8B5E3C;
+
+    margin-bottom:20px;
+
+    font-weight:400;
+}
+
+p{
+
+    margin-bottom:40px;
+
+    line-height:1.8;
+}
+
+.button-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+}
+
+button{
+
+    width:260px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:16px;
+}
+
+.main-btn{
+
+    background:#5F8D4E;
+
+    color:white;
+}
+
+.sub-btn{
+
+    background:#E8B86D;
+
+    color:#333;
+}
