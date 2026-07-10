@@ -4,6 +4,7 @@ from .models import Participant
 
 
 class ParticipantForm(forms.ModelForm):
+
     class Meta:
         model = Participant
 
@@ -68,13 +69,36 @@ class ParticipantForm(forms.ModelForm):
         name = cleaned_data.get("name")
         campus = cleaned_data.get("campus")
 
-        if name and campus:
-            if Participant.objects.filter(
+        if (
+            name
+            and campus
+            and Participant.objects.filter(
                 name=name,
                 campus=campus,
-            ).exists():
-                raise forms.ValidationError(
-                    "이미 등록된 참여자입니다. 참여하기를 이용해주세요."
-                )
+            ).exists()
+        ):
+            raise forms.ValidationError(
+                "이미 등록된 참여자입니다. 참여하기를 이용해주세요."
+            )
 
         return cleaned_data
+
+
+class EnterForm(forms.Form):
+
+    name = forms.CharField(
+        label="이름",
+        max_length=30,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "이름을 입력해주세요",
+            }
+        ),
+    )
+
+    campus = forms.ChoiceField(
+        label="캠퍼스",
+        choices=Participant._meta.get_field("campus").choices,
+        widget=forms.RadioSelect(),
+    )

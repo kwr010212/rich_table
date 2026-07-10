@@ -11,4 +11,5 @@ urlpatterns = [
         views.register_complete,
         name="register_complete",
     ),
+    path("enter/", views.enter, name="enter"),
 ]

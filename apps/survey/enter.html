@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+참여하기
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/pages/register.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="register-container">
+
+    <h1>🙋 참여하기</h1>
+
+    <p class="subtitle">
+        등록한 이름과 캠퍼스를 입력해주세요.
+    </p>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="error-box">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label>이름</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-group">
+            <label>캠퍼스</label>
+            {{ form.campus }}
+        </div>
+
+        <button class="main-btn" type="submit">
+            참여하기
+        </button>
+
+    </form>
+
+    <hr style="margin:40px 0;">
+
+    <p style="text-align:center;">
+        아직 등록하지 않으셨나요?
+    </p>
+
+    <div style="text-align:center;margin-top:15px;">
+        <a href="{% url 'survey:register' %}" class="sub-btn">
+            참여자 등록
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

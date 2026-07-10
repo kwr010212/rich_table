@@ -1,0 +1,23 @@
+{% if participant %}
+    <h2>{{ participant.name }}님 환영합니다.</h2>
+{% else %}
+    <h2>풍성한 식탁에 오신 것을 환영합니다.</h2>
+
+    <a href="{% url 'register' %}">참여 등록</a>
+
+    <a href="{% url 'enter' %}">참여 확인</a>
+{% endif %}
+
+<h1>🍽 풍성한 식탁</h1>
+
+<p>환영합니다!</p>
+
+<hr>
+
+<p><a href="#">🍚 식사 신청하기</a></p>
+
+<p><a href="#">📅 일정 확인</a></p>
+
+<p><a href="#">📢 공지사항</a></p>
+
+<p><a href="#">🙋 내 정보 수정</a></p>

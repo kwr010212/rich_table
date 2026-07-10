@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}참여 완료{% endblock %}
+
+{% block content %}
+
+<div class="register-container">
+
+    <h1>🎉 참여 확인 완료</h1>
+
+    <p>
+        {{ participant.name }}님,
+        참여가 확인되었습니다.
+    </p>
+
+    <a href="{% url 'main:home' %}" class="main-btn">
+        메인으로 돌아가기
+    </a>
+
+</div>
+
+{% endblock %}
