@@ -1,0 +1,45 @@
+.register-container{
+    max-width:600px;
+    margin:40px auto;
+    padding:20px;
+}
+
+.subtitle{
+    margin:20px 0;
+    color:#666;
+}
+
+.form-group{
+    margin-bottom:25px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.form-control{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+}
+
+textarea{
+    resize:vertical;
+}
+
+.main-btn{
+    width:100%;
+    margin-top:20px;
+}
+
+.error-box{
+    background:#ffe5e5;
+    color:#b00020;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
