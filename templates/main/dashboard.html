@@ -24,29 +24,47 @@
 
         {% if meeting %}
 
-        <a
-            href="{% url 'meeting:attendance' meeting.id %}"
-            class="card"
-        >
-            <div class="emoji">📅</div>
+            {% if meeting.status == "VOTING" %}
 
-            <h3>이번 모임</h3>
+                <a
+                    href="{% url 'meeting:vote' meeting.id %}"
+                    class="card"
+                >
 
-            <p>
-                {{ meeting.meeting_date }}
-            </p>
+                    <div class="emoji">📅</div>
 
-            <p>
-                {{ meeting.get_meal_type_display }}
-                ·
-                {{ meeting.meeting_time }}
-            </p>
+                    <h3>{{ meeting.title }}</h3>
 
-            <p>
-                {{ meeting.location }}
-            </p>
+                    <p>요일 투표가 진행 중입니다.</p>
 
-        </a>
+                    <p>눌러서 투표하기</p>
+
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{% url 'meeting:attendance' meeting.id %}"
+                    class="card"
+                >
+
+                    <div class="emoji">📅</div>
+
+                    <h3>{{ meeting.title }}</h3>
+
+                    <p>{{ meeting.meeting_date }}</p>
+
+                    <p>
+                        {{ meeting.get_meal_type_display }}
+                        ·
+                        {{ meeting.meeting_time }}
+                    </p>
+
+                    <p>{{ meeting.location }}</p>
+
+                </a>
+
+            {% endif %}
 
         {% else %}
 
@@ -73,14 +91,17 @@
                 {% for notice in notices|slice:":3" %}
 
                     <p>
-                        • {{ notice.title }}
+                        •
+                        <a href="{% url 'notice:detail' notice.id %}">
+                            {{ notice.title }}
+                        </a>
                     </p>
 
                 {% endfor %}
 
             {% else %}
 
-                <p>등록된 공지가 없습니다.</p>
+                <p>등록된 공지사항이 없습니다.</p>
 
             {% endif %}
 

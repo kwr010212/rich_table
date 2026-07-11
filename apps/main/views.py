@@ -28,13 +28,23 @@ def home(request):
 def dashboard(request):
     participant_id = request.session.get("participant_id")
 
-    meeting = (
+    confirmed_meeting = (
         Meeting.objects.filter(
             status=Meeting.Status.CONFIRMED,
         )
         .order_by("-meeting_date")
         .first()
     )
+
+    voting_meeting = (
+        Meeting.objects.filter(
+            status=Meeting.Status.VOTING,
+        )
+        .order_by("-created_at")
+        .first()
+    )
+
+    meeting = confirmed_meeting or voting_meeting
 
     if not participant_id:
         return redirect("survey:enter")

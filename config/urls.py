@@ -10,4 +10,8 @@ urlpatterns = [
         "meeting/",
         include("apps.meeting.urls"),
     ),
+    path(
+        "notice/",
+        include("apps.notice.urls"),
+    ),
 ]
