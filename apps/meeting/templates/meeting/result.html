@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+투표 결과
+{% endblock %}
+
+{% block content %}
+
+<h2>{{ meeting.title }}</h2>
+
+<p>{{ meeting.description }}</p>
+
+<hr>
+
+<h3>요일 투표 결과</h3>
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>요일</th>
+            <th>식사</th>
+            <th>인원</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for result in results %}
+
+        <tr>
+
+            <td>{{ weekday_map|get_item:result.weekday }}</td>
+
+            <td>{{ meal_map|get_item:result.meal_type }}</td>
+
+            <td>{{ result.count }}명</td>
+
+        </tr>
+
+    {% empty %}
+
+        <tr>
+            <td colspan="3">
+                아직 투표한 사람이 없습니다.
+            </td>
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

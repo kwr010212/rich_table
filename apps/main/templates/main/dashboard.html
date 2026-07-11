@@ -1,0 +1,74 @@
+<h1>여기는 dashboard.html 입니다.</h1>
+
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h2>{{ participant.name }}님, 환영합니다 😊</h2>
+
+<hr>
+
+<h3>📅 이번 모임</h3>
+
+{% if meeting %}
+
+<p><strong>날짜</strong> : {{ meeting.meeting_date }}</p>
+
+<p><strong>식사</strong> : {{ meeting.get_meal_type_display }}</p>
+
+<p><strong>시간</strong> : {{ meeting.meeting_time }}</p>
+
+<p><strong>장소</strong> : {{ meeting.location }}</p>
+
+<a
+    href="{% url 'meeting:attendance' meeting.id %}"
+    class="btn btn-success"
+>
+    참석하기
+</a>
+
+{% else %}
+
+<p>확정된 모임이 없습니다.</p>
+
+{% endif %}
+
+<hr>
+
+<h3>📢 공지사항</h3>
+
+{% if notices %}
+
+    {% for notice in notices %}
+
+        <div class="card mb-3">
+
+            <div class="card-body">
+
+                <h5>{{ notice.title }}</h5>
+
+                <small class="text-muted">
+                    {{ notice.created_at|date:"Y-m-d" }}
+                </small>
+
+                <p class="mt-2">
+                    {{ notice.content }}
+                </p>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+<p>등록된 공지사항이 없습니다.</p>
+
+{% endif %}
+
+{% endblock %}

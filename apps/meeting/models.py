@@ -79,3 +79,131 @@ class Meeting(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class AvailabilityVote(models.Model):
+
+    class Weekday(models.TextChoices):
+        MON = "MON", "월요일"
+        TUE = "TUE", "화요일"
+        WED = "WED", "수요일"
+        THU = "THU", "목요일"
+        FRI = "FRI", "금요일"
+        SAT = "SAT", "토요일"
+
+    class MealType(models.TextChoices):
+        LUNCH = "LUNCH", "점심"
+        DINNER = "DINNER", "저녁"
+
+    meeting = models.ForeignKey(
+        "meeting.Meeting",
+        on_delete=models.CASCADE,
+        related_name="availability_votes",
+    )
+
+    participant = models.ForeignKey(
+        "survey.Participant",
+        on_delete=models.CASCADE,
+        related_name="availability_votes",
+    )
+
+    weekday = models.CharField(
+        max_length=3,
+        choices=Weekday.choices,
+    )
+
+    meal_type = models.CharField(
+        max_length=10,
+        choices=MealType.choices,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        unique_together = (
+            "meeting",
+            "participant",
+            "weekday",
+            "meal_type",
+        )
+
+    def __str__(self):
+        return f"{self.participant} - {self.get_weekday_display()} {self.get_meal_type_display()}"
+    
+class Attendance(models.Model):
+
+    class Status(models.TextChoices):
+        ATTEND = "ATTEND", "참석"
+        ABSENT = "ABSENT", "불참"
+
+    meeting = models.ForeignKey(
+        Meeting,
+        on_delete=models.CASCADE,
+        related_name="attendances",
+    )
+
+    participant = models.ForeignKey(
+        "survey.Participant",
+        on_delete=models.CASCADE,
+        related_name="attendances",
+    )
+
+    status = models.CharField(
+        max_length=10,
+        choices=Status.choices,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        unique_together = (
+            "meeting",
+            "participant",
+        )
+
+    def __str__(self):
+        return f"{self.participant} - {self.get_status_display()}"
+
+class MeetingCandidate(models.Model):
+
+    class Weekday(models.TextChoices):
+        MON = "MON", "월요일"
+        TUE = "TUE", "화요일"
+        WED = "WED", "수요일"
+        THU = "THU", "목요일"
+        FRI = "FRI", "금요일"
+        SAT = "SAT", "토요일"
+
+    class MealType(models.TextChoices):
+        LUNCH = "LUNCH", "점심"
+        DINNER = "DINNER", "저녁"
+
+    meeting = models.ForeignKey(
+        Meeting,
+        on_delete=models.CASCADE,
+        related_name="candidates",
+    )
+
+    weekday = models.CharField(
+        max_length=3,
+        choices=Weekday.choices,
+    )
+
+    meal_type = models.CharField(
+        max_length=10,
+        choices=MealType.choices,
+    )
+
+    class Meta:
+        unique_together = (
+            "meeting",
+            "weekday",
+            "meal_type",
+        )
+
+    def __str__(self):
+        return f"{self.get_weekday_display()} {self.get_meal_type_display()}"

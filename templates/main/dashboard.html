@@ -22,17 +22,69 @@
 
     <div class="card-grid">
 
-        <a href="#" class="card">
+        {% if meeting %}
+
+        <a
+            href="{% url 'meeting:attendance' meeting.id %}"
+            class="card"
+        >
             <div class="emoji">📅</div>
-            <h3>이번 주 일정</h3>
-            <p>준비중입니다.</p>
+
+            <h3>이번 모임</h3>
+
+            <p>
+                {{ meeting.meeting_date }}
+            </p>
+
+            <p>
+                {{ meeting.get_meal_type_display }}
+                ·
+                {{ meeting.meeting_time }}
+            </p>
+
+            <p>
+                {{ meeting.location }}
+            </p>
+
         </a>
 
-        <a href="#" class="card">
+        {% else %}
+
+        <div class="card">
+
+            <div class="emoji">📅</div>
+
+            <h3>이번 모임</h3>
+
+            <p>확정된 모임이 없습니다.</p>
+
+        </div>
+
+        {% endif %}
+
+        <div class="card">
+
             <div class="emoji">📢</div>
+
             <h3>공지사항</h3>
-            <p>준비중입니다.</p>
-        </a>
+
+            {% if notices %}
+
+                {% for notice in notices|slice:":3" %}
+
+                    <p>
+                        • {{ notice.title }}
+                    </p>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>등록된 공지가 없습니다.</p>
+
+            {% endif %}
+
+        </div>
 
         <a href="#" class="card">
             <div class="emoji">🙏</div>

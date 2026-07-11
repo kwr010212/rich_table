@@ -6,4 +6,8 @@ urlpatterns = [
 
     path("", include("apps.main.urls")),
     path("", include("apps.survey.urls")),
+    path(
+        "meeting/",
+        include("apps.meeting.urls"),
+    ),
 ]

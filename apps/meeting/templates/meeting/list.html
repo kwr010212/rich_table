@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+모임 목록
+{% endblock %}
+
+{% block content %}
+
+<h2>진행 중인 모임</h2>
+
+{% for meeting in meetings %}
+
+<div class="card mb-3">
+
+    <div class="card-body">
+
+        <h4>{{ meeting.title }}</h4>
+
+        <p>{{ meeting.description }}</p>
+
+        <a
+            href="{% url 'meeting:vote' meeting.id %}"
+            class="btn btn-success"
+        >
+            투표하기
+        </a>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<p>현재 진행 중인 모임이 없습니다.</p>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+요일 투표
+{% endblock %}
+
+{% block content %}
+
+<h2>{{ meeting.title }}</h2>
+
+<p>{{ meeting.description }}</p>
+
+<hr>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button
+        type="submit"
+        class="btn btn-success"
+    >
+        투표하기
+    </button>
+
+</form>
+
+{% endblock %}
