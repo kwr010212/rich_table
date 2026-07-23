@@ -6,25 +6,69 @@
 
 {% block content %}
 
-<h2>{{ meeting.title }}</h2>
+<div class="container py-4">
 
-<p>{{ meeting.description }}</p>
+    <div class="card shadow-sm">
 
-<hr>
+        <div class="card-body">
 
-<form method="post">
+            <div class="text-center mb-4">
 
-    {% csrf_token %}
+                <h2 class="fw-bold">
+                    📅 {{ meeting.title }}
+                </h2>
 
-    {{ form.as_p }}
+                {% if meeting.description %}
+                    <p class="text-muted">
+                        {{ meeting.description }}
+                    </p>
+                {% endif %}
 
-    <button
-        type="submit"
-        class="btn btn-success"
-    >
-        투표하기
-    </button>
+            </div>
 
-</form>
+            <form method="post">
+
+                {% csrf_token %}
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold mb-3">
+                        가능한 시간을 선택해주세요.
+                    </label>
+
+                    {% for checkbox in form.candidates %}
+
+                        <div class="form-check mb-2">
+
+                            {{ checkbox.tag }}
+
+                            <label class="form-check-label ms-2" for="{{ checkbox.id_for_label }}">
+                                {{ checkbox.choice_label }}
+                            </label>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="d-grid">
+
+                    <button
+                        type="submit"
+                        class="btn btn-success btn-lg"
+                    >
+                        투표 완료
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

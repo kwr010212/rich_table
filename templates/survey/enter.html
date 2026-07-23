@@ -1,43 +1,88 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}참여하기{% endblock %}
+{% block title %}
+참여하기
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/pages/enter.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<div class="register-container">
+<div class="container py-5">
 
-    <h1>🙋 참여하기</h1>
+    <div class="row justify-content-center">
 
-    <p class="subtitle">
-        등록한 이름과 캠퍼스를 입력해주세요.
-    </p>
+        <div class="col-lg-6 col-md-8">
 
-    <form method="post">
+            <div class="card shadow-sm">
 
-        {% csrf_token %}
+                <div class="card-body p-4">
 
-        {% if form.non_field_errors %}
-            <div class="error-box">
-                {{ form.non_field_errors }}
+                    <div class="text-center mb-4">
+
+                        <h2 class="fw-bold">
+                            🙋 참여하기
+                        </h2>
+
+                        <p class="text-muted mb-0">
+                            등록한 이름과 캠퍼스를 입력해주세요.
+                        </p>
+
+                    </div>
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                이름
+                            </label>
+
+                            {{ form.name }}
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                캠퍼스
+                            </label>
+
+                            {{ form.campus }}
+
+                        </div>
+
+                        <div class="d-grid">
+
+                            <button
+                                type="submit"
+                                class="btn btn-success btn-lg"
+                            >
+                                참여하기
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
             </div>
-        {% endif %}
 
-        <div class="form-group">
-            <label for="{{ form.name.id_for_label }}">이름</label>
-            {{ form.name }}
         </div>
 
-        <div class="form-group">
-            <label>캠퍼스</label>
-            {{ form.campus }}
-        </div>
-
-        <button type="submit" class="main-btn">
-            참여하기
-        </button>
-
-    </form>
+    </div>
 
 </div>
 

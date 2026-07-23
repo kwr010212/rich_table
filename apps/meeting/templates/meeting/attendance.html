@@ -6,50 +6,92 @@
 
 {% block content %}
 
-<div class="card">
+<div class="container py-4">
 
-    <div class="card-body">
+    <div class="row justify-content-center">
 
-        <h2>{{ meeting.title }}</h2>
+        <div class="col-lg-7">
 
-        <hr>
+            <div class="card shadow-sm">
 
-        <p>
-            <strong>📅 날짜</strong><br>
-            {{ meeting.meeting_date|default:"미정" }}
-        </p>
+                <div class="card-body p-4">
 
-        <p>
-            <strong>🍽 식사</strong><br>
-            {{ meeting.get_meal_type_display|default:"미정" }}
-        </p>
+                    <div class="text-center mb-4">
 
-        <p>
-            <strong>🕒 시간</strong><br>
-            {{ meeting.meeting_time|default:"미정" }}
-        </p>
+                        <h2 class="fw-bold">
+                            🙋 참석 여부
+                        </h2>
 
-        <p>
-            <strong>📍 장소</strong><br>
-            {{ meeting.location|default:"미정" }}
-        </p>
+                        <h5 class="text-success">
+                            {{ meeting.title }}
+                        </h5>
 
-        <hr>
+                    </div>
 
-        <form method="post">
+                    <div class="row g-3 mb-4">
 
-            {% csrf_token %}
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <div class="text-muted small">📅 날짜</div>
+                                <div>{{ meeting.meeting_date|default:"미정" }}</div>
+                            </div>
+                        </div>
 
-            {{ form.as_p }}
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <div class="text-muted small">🍽 식사</div>
+                                <div>{{ meeting.get_meal_type_display|default:"미정" }}</div>
+                            </div>
+                        </div>
 
-            <button
-                type="submit"
-                class="btn btn-success"
-            >
-                제출하기
-            </button>
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <div class="text-muted small">🕒 시간</div>
+                                <div>{{ meeting.meeting_time|default:"미정" }}</div>
+                            </div>
+                        </div>
 
-        </form>
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <div class="text-muted small">📍 장소</div>
+                                <div>{{ meeting.location|default:"미정" }}</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                참석 여부를 선택해주세요.
+                            </label>
+
+                            {{ form.status }}
+
+                        </div>
+
+                        <div class="d-grid">
+
+                            <button
+                                type="submit"
+                                class="btn btn-success btn-lg"
+                            >
+                                제출하기
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 

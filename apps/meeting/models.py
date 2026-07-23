@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Case, When, IntegerField
 
 
 class Meeting(models.Model):

@@ -1,45 +1,109 @@
+/* =========================
+   Register Page
+========================= */
+
 .register-container{
-    max-width:600px;
+
+    max-width:700px;
+
     margin:40px auto;
-    padding:20px;
+
 }
+
+/* 제목 */
 
 .subtitle{
-    margin:20px 0;
-    color:#666;
+
+    color:#6c757d;
+
+    margin-bottom:30px;
+
 }
 
-.form-group{
-    margin-bottom:25px;
-}
+/* 라벨 */
 
-.form-group label{
-    display:block;
-    margin-bottom:8px;
+.form-label{
+
     font-weight:600;
+
+    margin-bottom:8px;
+
 }
+
+/* 입력창 */
 
 .form-control{
-    width:100%;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    font-size:15px;
+
+    border-radius:12px;
+
+    padding:12px 14px;
+
 }
+
+.form-control:focus{
+
+    border-color:#198754;
+
+    box-shadow:0 0 0 .2rem rgba(25,135,84,.15);
+
+}
+
+/* textarea */
 
 textarea{
+
     resize:vertical;
+
 }
 
-.main-btn{
-    width:100%;
-    margin-top:20px;
+/* 캠퍼스 */
+
+.form-check{
+
+    margin-bottom:10px;
+
 }
 
-.error-box{
-    background:#ffe5e5;
-    color:#b00020;
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:20px;
+.form-check-input{
+
+    cursor:pointer;
+
+}
+
+.form-check-label{
+
+    margin-left:6px;
+
+    cursor:pointer;
+
+}
+
+/* 버튼 */
+
+.btn{
+
+    border-radius:12px;
+
+    font-weight:600;
+
+}
+
+/* 에러 */
+
+.alert{
+
+    border-radius:12px;
+
+}
+
+/* 모바일 */
+
+@media (max-width:768px){
+
+    .register-container{
+
+        margin:20px auto;
+
+    }
+
 }

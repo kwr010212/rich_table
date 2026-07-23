@@ -13,111 +13,229 @@
 
 <div class="dashboard-container">
 
-    <h1>🍽 풍성한 식탁 · 풍성한 교제</h1>
+    <div class="text-center mb-5">
 
-    <p class="welcome">
-        {{ participant.name }}님,
-        환영합니다 😊
-    </p>
+        <h1 class="display-6 fw-bold">
+            🍽 풍성한 식탁 · 풍성한 교제
+        </h1>
 
-    <div class="card-grid">
+        <p class="welcome">
+            {{ participant.name }}님,
+            환영합니다 😊
+        </p>
 
-        {% if meeting %}
+    </div>
 
-            {% if meeting.status == "VOTING" %}
+    <div class="row g-4">
 
-                <a
-                    href="{% url 'meeting:vote' meeting.id %}"
-                    class="card"
-                >
+        <!-- 이번 모임 -->
 
-                    <div class="emoji">📅</div>
+        <div class="col-lg-6">
 
-                    <h3>{{ meeting.title }}</h3>
+            <div class="card h-100">
 
-                    <p>요일 투표가 진행 중입니다.</p>
+                <div class="card-body">
 
-                    <p>눌러서 투표하기</p>
+                    <div class="emoji">
+                        📅
+                    </div>
 
-                </a>
+                    <h3>이번 모임</h3>
 
-            {% else %}
+                    {% if meeting %}
 
-                <a
-                    href="{% url 'meeting:attendance' meeting.id %}"
-                    class="card"
-                >
+                        <h5 class="mt-4">
 
-                    <div class="emoji">📅</div>
+                            {{ meeting.title }}
 
-                    <h3>{{ meeting.title }}</h3>
+                        </h5>
 
-                    <p>{{ meeting.meeting_date }}</p>
+                        <p>
 
-                    <p>
-                        {{ meeting.get_meal_type_display }}
-                        ·
-                        {{ meeting.meeting_time }}
-                    </p>
+                            <strong>날짜</strong><br>
 
-                    <p>{{ meeting.location }}</p>
+                            {{ meeting.meeting_date }}
 
-                </a>
+                        </p>
 
-            {% endif %}
+                        <p>
 
-        {% else %}
+                            <strong>식사</strong><br>
 
-        <div class="card">
+                            {{ meeting.get_meal_type_display }}
 
-            <div class="emoji">📅</div>
+                        </p>
 
-            <h3>이번 모임</h3>
+                        <p>
 
-            <p>확정된 모임이 없습니다.</p>
+                            <strong>시간</strong><br>
+
+                            {{ meeting.meeting_time }}
+
+                        </p>
+
+                        <p>
+
+                            <strong>장소</strong><br>
+
+                            {{ meeting.location }}
+
+                        </p>
+
+                        {% if meeting.status == "VOTING" %}
+
+                            <a
+                                href="{% url 'meeting:vote' meeting.id %}"
+                                class="btn btn-success w-100"
+                            >
+                                요일 투표하기
+                            </a>
+
+                        {% else %}
+
+                            <a
+                                href="{% url 'meeting:attendance' meeting.id %}"
+                                class="btn btn-primary w-100"
+                            >
+                                참석하기
+                            </a>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <p class="mt-4">
+
+                            진행 중인 모임이 없습니다.
+
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
 
         </div>
 
-        {% endif %}
+        <!-- 공지 -->
 
-        <div class="card">
+        <div class="col-lg-6">
 
-            <div class="emoji">📢</div>
+            <div class="card h-100">
 
-            <h3>공지사항</h3>
+                <div class="card-body">
 
-            {% if notices %}
+                    <div class="emoji">
 
-                {% for notice in notices|slice:":3" %}
+                        📢
 
-                    <p>
-                        •
-                        <a href="{% url 'notice:detail' notice.id %}">
-                            {{ notice.title }}
-                        </a>
-                    </p>
+                    </div>
 
-                {% endfor %}
+                    <h3>공지사항</h3>
 
-            {% else %}
+                    {% if notices %}
 
-                <p>등록된 공지사항이 없습니다.</p>
+                        <div class="list-group list-group-flush mt-4">
 
-            {% endif %}
+                            {% for notice in notices|slice:":3" %}
+
+                                <a
+                                    href="{% url 'notice:detail' notice.id %}"
+                                    class="list-group-item list-group-item-action"
+                                >
+
+                                    <strong>
+
+                                        {{ notice.title }}
+
+                                    </strong>
+
+                                    <br>
+
+                                    <small class="text-muted">
+
+                                        {{ notice.created_at|date:"Y.m.d" }}
+
+                                    </small>
+
+                                </a>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% else %}
+
+                        <p class="mt-4">
+
+                            등록된 공지가 없습니다.
+
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
 
         </div>
 
-        <a href="#" class="card">
-            <div class="emoji">🙏</div>
-            <h3>기도제목</h3>
-            <p>준비중입니다.</p>
-        </a>
+        <!-- 기도 -->
 
-        <a href="#" class="card">
-            <div class="emoji">🍚</div>
-            <h3>이번 주 식사</h3>
-            <p>준비중입니다.</p>
-        </a>
+        <div class="col-lg-6">
+
+            <div class="card h-100">
+
+                <div class="card-body">
+
+                    <div class="emoji">
+
+                        🙏
+
+                    </div>
+
+                    <h3>기도제목</h3>
+
+                    <p class="mt-4">
+
+                        Beta 1.1에서 추가됩니다.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- 식사 -->
+
+        <div class="col-lg-6">
+
+            <div class="card h-100">
+
+                <div class="card-body">
+
+                    <div class="emoji">
+
+                        🍚
+
+                    </div>
+
+                    <h3>이번 주 식사</h3>
+
+                    <p class="mt-4">
+
+                        Beta 1.1에서 추가됩니다.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 

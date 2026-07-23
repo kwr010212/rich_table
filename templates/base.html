@@ -1,19 +1,75 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}풍성한 식탁, 풍성한 교제{% endblock %}</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    {% block css %}{% endblock %}
+    <title>
+        {% block title %}
+        풍성한 식탁 · 풍성한 교제
+        {% endblock %}
+    </title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- 공통 CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/base.css' %}"
+    >
+
+    {% block css %}
+    {% endblock %}
+
 </head>
-<body>
 
-{% block content %}
-{% endblock %}
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand fw-bold"
+            href="{% url 'main:dashboard' %}"
+        >
+            🍽 풍성한 식탁 · 풍성한 교제
+        </a>
+
+    </div>
+
+</nav>
+
+<main class="container py-4">
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+<footer class="text-center text-muted py-4">
+
+    <small>
+
+        © 2026 Kim WooRim
+
+    </small>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

@@ -6,50 +6,94 @@
 
 {% block content %}
 
-<h2>{{ meeting.title }}</h2>
+<div class="container py-4">
 
-<p>{{ meeting.description }}</p>
+    <div class="card shadow-sm">
 
-<hr>
+        <div class="card-body">
 
-<h3>요일 투표 결과</h3>
+            <div class="text-center mb-4">
 
-<table class="table table-bordered">
+                <h2 class="fw-bold">
+                    📊 요일 투표 결과
+                </h2>
 
-    <thead>
-        <tr>
-            <th>요일</th>
-            <th>식사</th>
-            <th>인원</th>
-        </tr>
-    </thead>
+                <h5 class="text-success">
+                    {{ meeting.title }}
+                </h5>
 
-    <tbody>
+                {% if meeting.description %}
+                    <p class="text-muted mb-0">
+                        {{ meeting.description }}
+                    </p>
+                {% endif %}
 
-    {% for result in results %}
+            </div>
 
-        <tr>
+            <div class="table-responsive">
 
-            <td>{{ weekday_map|get_item:result.weekday }}</td>
+                <table class="table table-hover align-middle">
 
-            <td>{{ meal_map|get_item:result.meal_type }}</td>
+                    <thead class="table-success">
 
-            <td>{{ result.count }}명</td>
+                        <tr>
 
-        </tr>
+                            <th>요일</th>
 
-    {% empty %}
+                            <th>식사</th>
 
-        <tr>
-            <td colspan="3">
-                아직 투표한 사람이 없습니다.
-            </td>
-        </tr>
+                            <th class="text-center">투표 수</th>
 
-    {% endfor %}
+                        </tr>
 
-    </tbody>
+                    </thead>
 
-</table>
+                    <tbody>
+
+                    {% for result in results %}
+
+                        <tr>
+
+                            <td>
+                                {{ weekday_map|get_item:result.weekday }}
+                            </td>
+
+                            <td>
+                                {{ meal_map|get_item:result.meal_type }}
+                            </td>
+
+                            <td class="text-center">
+                                <span class="badge bg-success">
+                                    {{ result.count }}명
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="3" class="text-center py-4 text-muted">
+
+                                📭 아직 투표한 사람이 없습니다.
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}
