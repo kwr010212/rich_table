@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "apps.notice",
     "apps.fellowship",
     "apps.meeting",
+    "apps.manager",
 ]
 
 # --------------------------------------------------

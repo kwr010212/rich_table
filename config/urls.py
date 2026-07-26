@@ -14,4 +14,8 @@ urlpatterns = [
         "notice/",
         include("apps.notice.urls"),
     ),
+    path(
+        "manager/",
+        include("apps.manager.urls"),
+    ),
 ]

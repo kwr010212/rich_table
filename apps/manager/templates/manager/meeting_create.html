@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}
+모임 생성
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        모임 생성
+    </h2>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.vote_start.label_tag }}
+            {{ form.vote_start }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.vote_end.label_tag }}
+            {{ form.vote_end }}
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+            저장
+        </button>
+
+        <a
+            href="{% url 'manager:meeting_list' %}"
+            class="btn btn-secondary"
+        >
+            취소
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

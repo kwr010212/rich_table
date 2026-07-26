@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+관리자
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>관리자 페이지</h2>
+
+    <hr>
+
+    <div class="list-group">
+
+        <a href="{% url 'manager:meeting_list' %}"
+        class="list-group-item list-group-item-action">
+            📅 모임 관리
+        </a>
+
+        <a href="#" class="list-group-item list-group-item-action">
+            📢 공지 관리
+        </a>
+
+        <a href="#" class="list-group-item list-group-item-action">
+            👥 참가자 관리
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

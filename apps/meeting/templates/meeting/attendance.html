@@ -70,7 +70,21 @@
                                 참석 여부를 선택해주세요.
                             </label>
 
-                            {{ form.status }}
+                            {% for radio in form.status %}
+
+                                <div class="form-check mb-2">
+
+                                    {{ radio.tag }}
+
+                                    <label class="form-check-label">
+
+                                        {{ radio.choice_label }}
+
+                                    </label>
+
+                                </div>
+
+                            {% endfor %}
 
                         </div>
 

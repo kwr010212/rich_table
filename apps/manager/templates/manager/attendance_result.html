@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}
+참석 결과
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>{{ meeting.title }}</h2>
+
+    <hr>
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <div class="alert alert-success text-center">
+
+                참석 {{ attend_count }}명
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="alert alert-danger text-center">
+
+                불참 {{ absent_count }}명
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <table class="table table-striped">
+
+        <thead>
+
+            <tr>
+
+                <th>이름</th>
+                <th>학교</th>
+                <th>참석 여부</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for attendance in attendances %}
+
+            <tr>
+
+                <td>{{ attendance.participant.name }}</td>
+
+                <td>{{ attendance.participant.get_campus_display }}</td>
+
+                <td>
+
+                    {% if attendance.status == "ATTEND" %}
+
+                        <span class="badge bg-success">
+
+                            참석
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-danger">
+
+                            불참
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        {% empty %}
+
+            <tr>
+
+                <td colspan="3" class="text-center">
+
+                    아직 응답한 참가자가 없습니다.
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

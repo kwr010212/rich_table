@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import Case, When, IntegerField
 
 
 class Meeting(models.Model):
@@ -7,6 +6,7 @@ class Meeting(models.Model):
     class Status(models.TextChoices):
         VOTING = "VOTING", "요일 투표중"
         CONFIRMED = "CONFIRMED", "모임 확정"
+        ATTENDANCE = "ATTENDANCE", "참석 여부 투표중"
         FINISHED = "FINISHED", "종료"
 
     title = models.CharField(

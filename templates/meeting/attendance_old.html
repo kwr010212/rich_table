@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+참석 여부 투표
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5" style="max-width:700px;">
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <h2 class="mb-4">
+                참석 여부 투표
+            </h2>
+
+            <h5>
+                {{ meeting.title }}
+            </h5>
+
+            <hr>
+
+            <p>
+                <strong>날짜</strong><br>
+                {{ meeting.meeting_date }}
+            </p>
+
+            <p>
+                <strong>식사</strong><br>
+                {{ meeting.get_meal_type_display }}
+            </p>
+
+            <p>
+                <strong>시간</strong><br>
+                {{ meeting.meeting_time }}
+            </p>
+
+            <p>
+                <strong>장소</strong><br>
+                {{ meeting.location }}
+            </p>
+
+            <hr>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                    저장하기
+
+                </button>
+
+                <a
+                    href="{% url 'main:dashboard' %}"
+                    class="btn btn-secondary">
+
+                    취소
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -14,7 +14,7 @@
     </div>
 
     <h1>풍성한 식탁</h1>
-    <h2>풍성한 교제</h2>
+    <h1>풍성한 교제</h1>
 
     <p>
         함께 식사하며<br>
@@ -23,13 +23,27 @@
 
     <div class="button-group">
 
-        <a href="{% url 'survey:enter' %}" class="main-btn">
-            참여하기
-        </a>
+        <div class="mt-4">
 
-        <a href="{% url 'survey:register' %}" class="sub-btn">
-            처음 오셨나요?
-        </a>
+            <a
+                href="{% url 'survey:enter' %}"
+                class="btn btn-success btn-lg px-5 rounded-pill"
+            >
+                참여하기
+            </a>
+
+            <div class="mt-3">
+
+                <a
+                    href="{% url 'survey:register' %}"
+                    class="text-decoration-none fw-semibold"
+                >
+                    처음 방문하셨나요?
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
