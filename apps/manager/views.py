@@ -7,6 +7,7 @@ from apps.meeting.models import (
     Meeting,
     MeetingCandidate,
 )
+from apps.survey.models import Participant
 
 from .forms import (
     MeetingConfirmForm,
@@ -21,6 +22,22 @@ def dashboard(request):
     )
 
 
+def participant_list(request):
+    participants = (
+        Participant.objects
+        .filter(is_active=True)
+        .order_by("name")
+    )
+
+    return render(
+        request,
+        "manager/participant_list.html",
+        {
+            "participants": participants,
+        },
+    )
+
+
 def meeting_list(request):
     meetings = Meeting.objects.all()
 
@@ -32,6 +49,7 @@ def meeting_list(request):
         },
     )
 
+
 def meeting_create(request):
 
     if request.method == "POST":
@@ -42,16 +60,17 @@ def meeting_create(request):
 
             meeting = form.save()
 
-            # 월~토 × 점심/저녁 후보 자동 생성
-            for weekday, _ in MeetingCandidate.Weekday.choices:
+            selected_slots = form.cleaned_data["available_slots"]
 
-                for meal_type, _ in MeetingCandidate.MealType.choices:
+            for slot in selected_slots:
 
-                    MeetingCandidate.objects.create(
-                        meeting=meeting,
-                        weekday=weekday,
-                        meal_type=meal_type,
-                    )
+                weekday, meal_type = slot.split("_")
+
+                MeetingCandidate.objects.create(
+                    meeting=meeting,
+                    weekday=weekday,
+                    meal_type=meal_type,
+                )
 
             return redirect(
                 "manager:meeting_list"
@@ -70,6 +89,7 @@ def meeting_create(request):
     )
 
 def meeting_detail(request, meeting_id):
+
     meeting = get_object_or_404(
         Meeting,
         pk=meeting_id,
@@ -78,12 +98,27 @@ def meeting_detail(request, meeting_id):
     # -----------------------------
     # 요일 투표 결과 집계
     # -----------------------------
+
     vote_results = (
         meeting.availability_votes
+        .filter(is_unavailable=False)
         .values("weekday", "meal_type")
         .annotate(vote_count=Count("id"))
         .order_by("-vote_count", "weekday", "meal_type")
     )
+
+    unavailable_votes = (
+        meeting.availability_votes
+        .filter(is_unavailable=True)
+        .select_related("participant")
+    )
+
+    unavailable_count = unavailable_votes.count()
+
+    unavailable_voters = [
+        vote.participant.name
+        for vote in unavailable_votes
+    ]
 
     # 코드 → 한글 변환용
     weekday_map = dict(
@@ -126,6 +161,7 @@ def meeting_detail(request, meeting_id):
     # -----------------------------
     # 모임 확정
     # -----------------------------
+
     if request.method == "POST":
 
         form = MeetingConfirmForm(
@@ -136,7 +172,9 @@ def meeting_detail(request, meeting_id):
         if form.is_valid():
 
             meeting = form.save(commit=False)
+
             meeting.status = Meeting.Status.CONFIRMED
+
             meeting.save()
 
             return redirect(
@@ -158,11 +196,14 @@ def meeting_detail(request, meeting_id):
             "form": form,
             "vote_results": vote_results,
             "top_vote": top_vote,
+            "unavailable_count": unavailable_count,
+            "unavailable_voters": unavailable_voters,
         },
     )
 
 
 def attendance_result(request, meeting_id):
+
     meeting = get_object_or_404(
         Meeting,
         pk=meeting_id,

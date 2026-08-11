@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.survey.models import Participant
@@ -12,7 +13,7 @@ from .models import (
     Attendance,
     Meeting,
 )
-from django.db.models import Count
+
 
 def meeting_list(request):
     meetings = Meeting.objects.filter(
@@ -29,6 +30,7 @@ def meeting_list(request):
 
 
 def vote(request, meeting_id):
+
     meeting = get_object_or_404(
         Meeting,
         pk=meeting_id,
@@ -59,7 +61,7 @@ def vote(request, meeting_id):
                 participant=participant,
             ).delete()
 
-            # 새 투표 저장
+            # 선택한 시간 저장
             for candidate in form.cleaned_data["candidates"]:
 
                 AvailabilityVote.objects.create(
@@ -67,6 +69,18 @@ def vote(request, meeting_id):
                     participant=participant,
                     weekday=candidate.weekday,
                     meal_type=candidate.meal_type,
+                    is_unavailable=False,
+                )
+
+            # 시간 안됨 저장
+            if form.cleaned_data["unavailable"]:
+
+                AvailabilityVote.objects.create(
+                    meeting=meeting,
+                    participant=participant,
+                    weekday=None,
+                    meal_type=None,
+                    is_unavailable=True,
                 )
 
             return redirect("main:dashboard")
@@ -86,7 +100,9 @@ def vote(request, meeting_id):
         },
     )
 
+
 def result(request, meeting_id):
+
     meeting = get_object_or_404(
         Meeting,
         pk=meeting_id,
@@ -94,18 +110,33 @@ def result(request, meeting_id):
 
     results = (
         AvailabilityVote.objects
-        .filter(meeting=meeting)
+        .filter(
+            meeting=meeting,
+            is_unavailable=False,
+        )
         .values("weekday", "meal_type")
         .annotate(count=Count("id"))
-        .order_by("weekday", "meal_type")
-        
+        .order_by(
+            "weekday",
+            "meal_type",
+        )
     )
+
     weekday_map = dict(
         AvailabilityVote.Weekday.choices
     )
 
     meal_map = dict(
         AvailabilityVote.MealType.choices
+    )
+
+    unavailable_count = (
+        AvailabilityVote.objects
+        .filter(
+            meeting=meeting,
+            is_unavailable=True,
+        )
+        .count()
     )
 
     return render(
@@ -116,10 +147,13 @@ def result(request, meeting_id):
             "results": results,
             "weekday_map": weekday_map,
             "meal_map": meal_map,
+            "unavailable_count": unavailable_count,
         },
     )
 
+
 def attendance(request, meeting_id):
+
     meeting = get_object_or_404(
         Meeting,
         pk=meeting_id,
@@ -145,6 +179,7 @@ def attendance(request, meeting_id):
     ).first()
 
     if request.method == "POST":
+
         form = AttendanceForm(request.POST)
 
         if form.is_valid():
@@ -160,12 +195,15 @@ def attendance(request, meeting_id):
             return redirect("main:dashboard")
 
     else:
+
         initial = {}
 
         if attendance:
             initial["status"] = attendance.status
 
-        form = AttendanceForm(initial=initial)
+        form = AttendanceForm(
+            initial=initial
+        )
 
     return render(
         request,

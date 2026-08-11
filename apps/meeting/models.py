@@ -111,11 +111,20 @@ class AvailabilityVote(models.Model):
     weekday = models.CharField(
         max_length=3,
         choices=Weekday.choices,
+        null=True,
+        blank=True,
     )
 
     meal_type = models.CharField(
         max_length=10,
         choices=MealType.choices,
+        null=True,
+        blank=True,
+    )
+
+    is_unavailable = models.BooleanField(
+        "시간 안됨",
+        default=False,
     )
 
     created_at = models.DateTimeField(
@@ -131,7 +140,15 @@ class AvailabilityVote(models.Model):
         )
 
     def __str__(self):
-        return f"{self.participant} - {self.get_weekday_display()} {self.get_meal_type_display()}"
+
+        if self.is_unavailable:
+            return f"{self.participant} - 시간 안됨"
+
+        return (
+            f"{self.participant} - "
+            f"{self.get_weekday_display()} "
+            f"{self.get_meal_type_display()}"
+        )
     
 class Attendance(models.Model):
 

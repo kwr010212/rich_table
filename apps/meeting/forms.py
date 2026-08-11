@@ -1,10 +1,13 @@
 from django import forms
 
 from .models import (
+    AvailabilityVote,
     MeetingCandidate,
     Attendance,
 )
+
 from django.db.models import Case, When, IntegerField
+
 
 class AvailabilityVoteForm(forms.Form):
 
@@ -16,12 +19,25 @@ class AvailabilityVoteForm(forms.Form):
             }
         ),
         label="가능한 시간을 선택해주세요.",
+        required=False,
+    )
+
+    unavailable = forms.BooleanField(
+        required=False,
+        label="시간 안됨",
+        widget=forms.CheckboxInput(
+            attrs={
+                "class": "form-check-input",
+            }
+        ),
     )
 
     def __init__(self, *args, meeting=None, **kwargs):
+
         super().__init__(*args, **kwargs)
 
         if meeting:
+
             self.fields["candidates"].queryset = (
                 meeting.candidates
                 .annotate(
@@ -40,8 +56,12 @@ class AvailabilityVoteForm(forms.Form):
                         output_field=IntegerField(),
                     ),
                 )
-                .order_by("weekday_order", "meal_order")
+                .order_by(
+                    "weekday_order",
+                    "meal_order",
+                )
             )
+
 
 class AttendanceForm(forms.Form):
 
@@ -53,4 +73,4 @@ class AttendanceForm(forms.Form):
                 "class": "form-check-input",
             }
         ),
-    )   
+    )

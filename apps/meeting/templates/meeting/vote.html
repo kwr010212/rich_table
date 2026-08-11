@@ -26,10 +26,13 @@
 
             </div>
 
+
             <form method="post">
 
                 {% csrf_token %}
 
+
+                <!-- 가능한 시간 -->
                 <div class="mb-4">
 
                     <label class="form-label fw-semibold mb-3">
@@ -42,7 +45,10 @@
 
                             {{ checkbox.tag }}
 
-                            <label class="form-check-label ms-2" for="{{ checkbox.id_for_label }}">
+                            <label
+                                class="form-check-label ms-2"
+                                for="{{ checkbox.id_for_label }}"
+                            >
                                 {{ checkbox.choice_label }}
                             </label>
 
@@ -52,6 +58,27 @@
 
                 </div>
 
+
+                <!-- 시간 안됨 -->
+                <div class="border-top pt-3 mb-4">
+
+                    <div class="form-check">
+
+                        {{ form.unavailable }}
+
+                        <label
+                            class="form-check-label ms-2 fw-semibold"
+                            for="{{ form.unavailable.id_for_label }}"
+                        >
+                            시간 안됨
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 투표 완료 -->
                 <div class="d-grid">
 
                     <button

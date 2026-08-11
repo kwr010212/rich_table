@@ -16,26 +16,117 @@
 
         {% csrf_token %}
 
+        <!-- 모임명 -->
         <div class="mb-3">
+
             {{ form.title.label_tag }}
+
             {{ form.title }}
+
+            {% if form.title.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.title.errors }}
+                </div>
+            {% endif %}
+
         </div>
 
+
+        <!-- 설명 -->
         <div class="mb-3">
+
             {{ form.description.label_tag }}
+
             {{ form.description }}
+
+            {% if form.description.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.description.errors }}
+                </div>
+            {% endif %}
+
         </div>
 
+
+        <!-- 투표 시작일 -->
         <div class="mb-3">
+
             {{ form.vote_start.label_tag }}
+
             {{ form.vote_start }}
+
+            {% if form.vote_start.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.vote_start.errors }}
+                </div>
+            {% endif %}
+
         </div>
 
-        <div class="mb-3">
+
+        <!-- 투표 종료일 -->
+        <div class="mb-4">
+
             {{ form.vote_end.label_tag }}
+
             {{ form.vote_end }}
+
+            {% if form.vote_end.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.vote_end.errors }}
+                </div>
+            {% endif %}
+
         </div>
 
+
+        <!-- 가능한 시간 -->
+        <div class="mb-4">
+
+            <label class="form-label fw-semibold">
+                가능한 시간
+            </label>
+
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        {% for checkbox in form.available_slots %}
+
+                            <div class="col-md-6">
+
+                                <div class="form-check">
+
+                                    {{ checkbox.tag }}
+
+                                    <label class="form-check-label">
+                                        {{ checkbox.choice_label }}
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% if form.available_slots.errors %}
+                <div class="text-danger small mt-2">
+                    {{ form.available_slots.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- 버튼 -->
         <button
             type="submit"
             class="btn btn-primary"
